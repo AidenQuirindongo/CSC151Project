@@ -55,17 +55,17 @@ System.out.println();
 System.out.print("Please enter the Policyholder's Weight (in pounds): ");
 weight = keyboard.nextDouble();
 
-Policy policy = new Policy("12345", "State Farm", "John", "Smith", 55, "smoker", 70, 200);
+Policy policy = new Policy(policyNumber, providerName, firstName, lastName, age, smokingStatus, height, weight);
 
 System.out.println("Policy Number: " + policy.getPolicyNumber());
 System.out.println("Provider Name: " + policy.getProviderName());
 System.out.println("Policyholder: " + policy.getFirstName() + " " + policy.getLastName());
-System.out.println("Age: " + policy.getAge());
-System.out.println("Smoking Status: " + policy.getSmokingStatus());
-System.out.println("Height: " + policy.getHeight() + " inches");
-System.out.println("Weight: " + policy.getWeight() + " pounds");
+System.out.println("Policyholder's Age: " + policy.getAge());
+System.out.println("Policyholder's Smoking Status: " + policy.getSmokingStatus());
+System.out.println("Policyholder's Height: " + policy.getHeight() + " inches");
+System.out.println("Policyholder's Weight: " + policy.getWeight() + " pounds");
 
-System.out.printf("BMI: %.2f\n", policy.getBMI());
+System.out.printf("Policyholder's BMI: %.2f\n", policy.getBMI());
 System.out.printf("Policy Price: $%.2f\n", policy.getPolicyPrice());
 
 }
