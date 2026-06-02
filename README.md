@@ -1,2 +1,2 @@
-# CSC120Project
+# CSC151Project
 
