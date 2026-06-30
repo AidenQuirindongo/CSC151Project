@@ -3,10 +3,15 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 
+/**
+This program reads policy information from a file and displays
+information about each insurance policy.
+*/
+
 public class Project_Aiden_Quirindongo
 {
 public static void main(String[] args) throws IOException
-{
+   {
 ArrayList<Policy> policies = new ArrayList<Policy>();
 
 File file = new File("PolicyInformation.txt");
@@ -26,9 +31,10 @@ String smokingStatus = getNextNonBlankLine(inputFile);
 double height = Double.parseDouble(getNextNonBlankLine(inputFile));
 double weight = Double.parseDouble(getNextNonBlankLine(inputFile));
 
-Policy policy = new Policy(policyNumber, providerName, firstName,
-lastName, age, smokingStatus,
-height, weight);
+PolicyHolder holder = new PolicyHolder(firstName, lastName, age,
+                                                   smokingStatus, height, weight);
+
+Policy policy = new Policy(policyNumber, providerName, holder);
 
 policies.add(policy);
 }
@@ -36,9 +42,15 @@ policies.add(policy);
 
 inputFile.close();
 
-      displayPolicies(policies);
-      displaySmokerTotals(policies);
+displayPolicies(policies);
+displayPolicyTotals(policies);
 }
+
+/**
+Gets the next nonblank line from the input file.
+@param inputFile The Scanner object used to read the file.
+@return The next nonblank line, or an empty string if none is found.
+*/
 
 public static String getNextNonBlankLine(Scanner inputFile)
 {
@@ -46,67 +58,53 @@ String line = "";
 
 while (inputFile.hasNextLine() && line.equals(""))
 {
-line = inputFile.nextLine();
-
-if (line.trim().equals(""))
-{
-line = "";
-}
+line = inputFile.nextLine().trim();
 }
 
 return line;
 }
 
+/**
+Displays all policy information.
+@param policies The ArrayList of Policy objects.
+*/
+
 public static void displayPolicies(ArrayList<Policy> policies)
 {
 for (int index = 0; index < policies.size(); index++)
 {
-Policy policy = policies.get(index);
-
-System.out.println("Policy Number: " + policy.getPolicyNumber());
-System.out.println();
-System.out.println("Provider Name: " + policy.getProviderName());
-System.out.println();
-System.out.println("Policyholder's First Name: " + policy.getFirstName());
-System.out.println();
-System.out.println("Policyholder's Last Name: " + policy.getLastName());
-System.out.println();
-System.out.println("Policyholder's Age: " + policy.getAge());
-System.out.println();
-System.out.println("Policyholder's Smoking Status (smoker/non-smoker): " +
-policy.getSmokingStatus());
-System.out.println();
-System.out.printf("Policyholder's Height: %.1f inches\n", policy.getHeight());
-System.out.println();
-System.out.printf("Policyholder's Weight: %.1f pounds\n", policy.getWeight());
-System.out.println();
-System.out.printf("Policyholder's BMI: %.2f\n", policy.getBMI());
-System.out.println();
-System.out.printf("Policy Price: $%.2f\n", policy.getPolicyPrice());
-System.out.println();
+System.out.println(policies.get(index));
 System.out.println();
 }
 }
 
-public static void displaySmokerTotals(ArrayList<Policy> policies)
+/**
+Displays the number of policies created and smoker totals.
+@param policies The ArrayList of Policy objects.
+*/
+
+public static void displayPolicyTotals(ArrayList<Policy> policies)
 {
 int smokers = 0;
 int nonSmokers = 0;
 
 for (int index = 0; index < policies.size(); index++)
 {
-Policy policy = policies.get(index);
+PolicyHolder holder = policies.get(index).getPolicyHolder();
 
-if (policy.getSmokingStatus().equalsIgnoreCase("smoker"))
+if (holder.isSmoker())
 {
 smokers++;
 }
-else if (policy.getSmokingStatus().equalsIgnoreCase("non-smoker"))
+else
 {
 nonSmokers++;
 }
 }
 
+System.out.println("There were " + Policy.getNumberOfPolicies() +
+                         " Policy objects created.");
+System.out.println();
 System.out.println("The number of policies with a smoker is: " + smokers);
 System.out.println();
 System.out.println("The number of policies with a non-smoker is: " + nonSmokers);
